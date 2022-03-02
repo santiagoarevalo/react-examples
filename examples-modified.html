@@ -73,8 +73,8 @@
         render() {
           return (
             <div>
-              <p> <h2>Timer</h2> (hh:mm:ss) : {this.state.hour} : {this.state.minutes} : {this.state.seconds}</p>
-              <p> A Stateful Component V2 (hh:mm:ss) : {this.state.hour2} : {this.state.minutes2} : {this.state.seconds2}</p>
+              <p> <b>Timer 1</b> - (hh:mm:ss) : {this.state.hour} : {this.state.minutes} : {this.state.seconds}</p>
+              <p> <b>Timer 2</b> - (hh:mm:ss) : {this.state.hour2} : {this.state.minutes2} : {this.state.seconds2}</p>
             </div>
           );
         }
@@ -96,21 +96,22 @@
         }
 
         render() {
+          let character = 65;
           return (
             <div>
               <h3>TODO</h3>
               <TodoList items={this.state.items} />
               <form onSubmit={this.handleSubmit}>
                 <label htmlFor="new-todo">
-                  What needs to be done?
+                  <p>What needs to be done? &nbsp;</p>
                 </label>
                 <input
                   id="new-todo"
-                  onChange={this.handleChange}
-                  value={this.state.text}
-                />
+                  onChange = {this.handleChange}
+                  value = {this.state.text}
+                /> &nbsp;
                 <button>
-                  Add #{this.state.items.length + 1}
+                  Add Task {String.fromCharCode(character + this.state.items.length)}
                 </button>
               </form>
             </div>
@@ -118,7 +119,8 @@
         }
 
         handleChange(e) {
-        this.setState({ text: e.target.value });
+          this.setState({ text: e.target.value });
+          characterNumber = characterNumber + 1;
         }
 
         handleSubmit(e) {
@@ -140,11 +142,11 @@
       class TodoList extends React.Component {
         render() {
           return (
-            <ul>
-              {this.props.items.map(item => (
+            <ol type = "A">
+                {this.props.items.map(item => (
                 <li key={item.id}>{item.text}</li>
-              ))}
-            </ul>
+                ))}
+            </ol>
           );
         }
       }
@@ -159,7 +161,7 @@
       class MarkdownEditor extends React.Component {
         constructor(props) {
           super(props);
-          this.md = new Remarkable();
+          this.md = new Remarkable({html: true});
           this.handleChange = this.handleChange.bind(this);
           this.state = { value: 'Hello, **world**!' };
         }
@@ -177,17 +179,17 @@
             <div className="MarkdownEditor">
               <h3>Input</h3>
               <label htmlFor="markdown-content">
-                Enter some markdown
+                Enter some markdown &nbsp;
               </label>
               <textarea
-                id="markdown-content"
-                onChange={this.handleChange}
-                defaultValue={this.state.value}
+                id = "markdown-content"
+                onChange = {this.handleChange}
+                defaultValue = {this.state.value}
               />
               <h3>Output</h3>
               <div
-                className="content"
-                dangerouslySetInnerHTML={this.getRawMarkup()}
+                className = "content"
+                dangerouslySetInnerHTML = {this.getRawMarkup()}
               />
             </div>
           );
