@@ -38,17 +38,32 @@
       class Timer extends React.Component {
         constructor(props) {
           super(props);
-          this.state = { seconds: 0 };
+          this.state = {hour: 0, minutes: 0, seconds: 0, hour2: 0, minutes2: 0, seconds2: 0};
         }
 
         tick() {
-          this.setState(state => ({
-            seconds: state.seconds + 1
-          }));
+          if(this.state.seconds === 59) {
+            this.setState(state => ({minutes: state.minutes + 1, seconds: 0}));
+          }else if(this.state.minutes === 59) {
+            this.setState(state => ({hour: state.hour + 1, minutes: 0, seconds: 0}));
+          }else {
+            this.setState(state => ({seconds: state.seconds + 1}));
+          }
+        }
+
+        tickv2() {
+          if(this.state.seconds2 === 9) {
+            this.setState(state => ({minutes2: state.minutes2 + 1, seconds2: 0}));
+          }else if (this.state.minutes2 === 9) {
+              this.setState(state => ({hour2: state.hour2 + 1, minutes2: 0, seconds2: 0}))
+          }else {
+              this.setState(state => ({seconds2: state.seconds2 + 1}));
+          }
         }
 
         componentDidMount() {
           this.interval = setInterval(() => this.tick(), 1000);
+          this.interval = setInterval(() => this.tickv2(), 1000)
         }
 
         componentWillUnmount() {
@@ -58,7 +73,8 @@
         render() {
           return (
             <div>
-              Seconds: {this.state.seconds}
+              <p> <h2>Timer</h2> (hh:mm:ss) : {this.state.hour} : {this.state.minutes} : {this.state.seconds}</p>
+              <p> A Stateful Component V2 (hh:mm:ss) : {this.state.hour2} : {this.state.minutes2} : {this.state.seconds2}</p>
             </div>
           );
         }
